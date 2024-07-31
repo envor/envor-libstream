@@ -16,6 +16,8 @@ class LibstreamServiceProvider extends PackageServiceProvider
          */
         $package
             ->name('libstream')
+            ->hasConfigFile()
+            ->hasCommand(Commands\LibstreamMigrateCommand::class)
             ->hasMigrations([
                 '2024_06_26_194318_create_stored_events_table',
                 '2024_06_26_194319_create_snapshots_table',
