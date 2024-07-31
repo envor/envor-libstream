@@ -1,0 +1,6 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Attribute class Spatie\\\\EventSourcing\\\\Commands\\\\AggregateUuid does not have the parameter target\\.$#"
+			count: 1
+			path: src/StorableSignature.php

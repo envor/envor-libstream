@@ -138,9 +138,9 @@ class LibstreamMigrateCommand extends Command
             $options['--force'] = true;
         }
         if ($this->option('reset')) {
-            $this->call('migrate:reset', $options, $this->output);
+            $this->call('migrate:reset', $options);
         }
 
-        $this->call('migrate', $options, $this->output);
+        $this->call('migrate', $options);
     }
 }
