@@ -8,12 +8,16 @@ return new class extends Migration
 {
     public function up()
     {
-        Schema::create('libstream_table', function (Blueprint $table) {
+        Schema::create('deleted_models', function (Blueprint $table) {
             $table->id();
 
-            // add fields
+            $table->string('key', 40);
+            $table->string('model');
+            $table->json('values');
 
             $table->timestamps();
+
+            $table->unique(['model', 'key']);
         });
     }
 };
