@@ -3,7 +3,6 @@
 namespace Envor\Libstream;
 
 use Spatie\EventSourcing\Commands\AggregateUuid;
-use Spatie\EventSourcing\StoredEvents\ShouldBeStored;
 
 trait HasStorableEventSignature
 {

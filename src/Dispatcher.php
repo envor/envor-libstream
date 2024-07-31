@@ -10,15 +10,15 @@ class Dispatcher
 
     protected array $commands = [];
 
-    public static function new(): self
+    public static function new(): static
     {
-        return new self;
+        return new static;
     }
 
     /**
      * Create a new class instance.
      */
-    public function __construct()
+    final public function __construct()
     {
         $this->commandBus = app(CommandBus::class);
     }
