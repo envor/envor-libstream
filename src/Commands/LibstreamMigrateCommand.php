@@ -42,12 +42,12 @@ class LibstreamMigrateCommand extends Command
 
     protected function tables(): array
     {
-        return $this->option('tables') ? :  config('libstream.migration_tables', []);
+        return $this->option('tables') ?: config('libstream.migration_tables', []);
     }
 
     protected function migrationPath(): string
     {
-        return $this->option('path') ? :realpath(__DIR__.'/../../database/migrations');
+        return $this->option('path') ?: realpath(__DIR__.'/../../database/migrations');
     }
 
     protected function dropTables(): void
