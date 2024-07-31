@@ -16,6 +16,7 @@ class LibstreamMigrateCommand extends Command
     {
         if($this->option('database')) {
             app(DatabaseManager::class)->usingConnection($this->option('database'), fn() => $this->body());
+            
             return self::SUCCESS;
         }
 
@@ -24,36 +25,30 @@ class LibstreamMigrateCommand extends Command
         return self::SUCCESS;
     }
 
-    private function body()
+    protected function migrationTables() : array
+    {
+        return config('libstream.migration_tables', []);
+    }
+
+    protected function body()
     {
         if ($this->option('fresh')) {
-            foreach (config('libstream.migration_tables') as $table) {
+            foreach ($this->migrationTables() as $table) {
+                $this->info("Dropping table: $table");
                 Schema::dropIfExists($table);
             }
-
-            // delete the migrations from the migrations repository
-            $files = glob(__DIR__ . '/../../database/migrations/*');
-
-            foreach ($files as $file) {
-                // get the migration file name without extension
-                $fileName = pathinfo($file, PATHINFO_FILENAME);
-                //get full realpath to file
-                $realpath = realpath($file);
-                // delete the migration from the migrations repository
-                $options = ['--path' => $realpath, '--realpath' => true];
-                if ($this->option('force')) {
-                    $options['--force'] = true;
-                }
-                $this->call('migrate:reset', $options, $this->output);
-            }
-            return;
         }
 
-        // run the migrations
-        $options = ['--path' => __DIR__ . '/../../database/migrations'];
+        $realpath = realpath(__DIR__.'/../../database/migrations/*');
+
+        $options = ['--path' => $realpath, '--realpath' => true];
         if ($this->option('force')) {
             $options['--force'] = true;
         }
+        if ($this->option('fresh')) {
+            $this->call('migrate:refresh', $options, $this->output);
+        }
+
         $this->call('migrate', $options, $this->output);
     }
 }
