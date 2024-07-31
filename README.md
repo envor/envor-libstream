@@ -67,7 +67,18 @@ class Dispatcher extends LibDispatcher
     }
 }
 ```
-
+```php
+    $uuid = (string) str()->ulid();
+    $dispatcher = Dispatcher::new()->createBusiness(
+      uuid: $uuid,
+      businessAttributes: $validatedData,
+      metaData: [
+        'auth' => [
+          'email' => Auth::user()->email,
+        ],
+      ]
+    )->dispatch();
+```
 ## Testing
 
 ```bash
