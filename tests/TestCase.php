@@ -2,9 +2,9 @@
 
 namespace Envor\Libstream\Tests;
 
+use Envor\Libstream\LibstreamServiceProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Orchestra\Testbench\TestCase as Orchestra;
-use Envor\Libstream\LibstreamServiceProvider;
 
 class TestCase extends Orchestra
 {

@@ -4,7 +4,6 @@ namespace Envor\Libstream;
 
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use Envor\Libstream\Commands\LibstreamCommand;
 
 class LibstreamServiceProvider extends PackageServiceProvider
 {
@@ -23,7 +22,7 @@ class LibstreamServiceProvider extends PackageServiceProvider
                 '2024_06_27_165025_change_stored_events_aggregate_uuid_column.php',
                 '2024_07_01_234023_change_snapshots_uuid_column.php',
                 '2024_07_07_131035_create_deleted_models_table.php',
-	    ])
+            ])
             ->runsMigrations();
     }
 }

@@ -11,8 +11,7 @@ trait HasStorableEventSignature
         public ShouldBeStored $signature,
         #[AggregateUuid]
         public ?string $aggregateUuid = null,
-    )
-    {
+    ) {
         $this->aggregateUuid = $this->aggregateUuid ?? $signature->aggregateUuid;
     }
 
