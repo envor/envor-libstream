@@ -12,7 +12,7 @@ class Dispatcher
 
     public static function new(): self
     {
-        return new self();
+        return new self;
     }
 
     /**
@@ -25,8 +25,6 @@ class Dispatcher
 
     /**
      * Add a command to the dispatcher.
-     *
-     * @return self
      */
     public function add(Command $command): self
     {
@@ -37,8 +35,6 @@ class Dispatcher
 
     /**
      * Dispatch all commands.
-     *
-     * @return void
      */
     public function dispatch(): void
     {
@@ -49,8 +45,6 @@ class Dispatcher
 
     /**
      * Clear all commands.
-     *
-     * @return void
      */
     public function clear(): void
     {
@@ -59,8 +53,6 @@ class Dispatcher
 
     /**
      * Get all commands.
-     *
-     * @return array
      */
     public function all(): array
     {
