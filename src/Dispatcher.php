@@ -18,7 +18,7 @@ class Dispatcher
     /**
      * Create a new class instance.
      */
-    public function __construct()
+    final public function __construct()
     {
         $this->commandBus = app(CommandBus::class);
     }
