@@ -14,9 +14,9 @@ class LibstreamMigrateCommand extends Command
 
     public function handle(): int
     {
-        if($this->option('database')) {
-            app(DatabaseManager::class)->usingConnection($this->option('database'), fn() => $this->body());
-            
+        if ($this->option('database')) {
+            app(DatabaseManager::class)->usingConnection($this->option('database'), fn () => $this->body());
+
             return self::SUCCESS;
         }
 
@@ -25,7 +25,7 @@ class LibstreamMigrateCommand extends Command
         return self::SUCCESS;
     }
 
-    protected function migrationTables() : array
+    protected function migrationTables(): array
     {
         return config('libstream.migration_tables', []);
     }
