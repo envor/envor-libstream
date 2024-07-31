@@ -1,12 +1,12 @@
 <?php
 
-namespace VendorName\Skeleton\Commands;
+namespace Envor\Libstream\Commands;
 
 use Illuminate\Console\Command;
 
-class SkeletonCommand extends Command
+class LibstreamCommand extends Command
 {
-    public $signature = 'skeleton';
+    public $signature = 'libstream';
 
     public $description = 'My command';
 
