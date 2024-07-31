@@ -10,9 +10,9 @@ class Dispatcher
 
     protected array $commands = [];
 
-    public static function new(): self
+    public static function new(): static
     {
-        return new self;
+        return new static;
     }
 
     /**
