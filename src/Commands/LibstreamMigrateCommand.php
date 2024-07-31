@@ -4,6 +4,7 @@ namespace Envor\Libstream\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Database\DatabaseManager;
+use Illuminate\Database\Migrations\MigrationRepositoryInterface;
 use Illuminate\Support\Facades\Schema;
 
 class LibstreamMigrateCommand extends Command
