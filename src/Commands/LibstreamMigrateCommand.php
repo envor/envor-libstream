@@ -4,19 +4,35 @@ namespace Envor\Libstream\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Database\DatabaseManager;
+use Illuminate\Database\Migrations\MigrationRepositoryInterface;
 use Illuminate\Support\Facades\Schema;
 
 class LibstreamMigrateCommand extends Command
 {
-    public $signature = 'libstream:migrate {--force : Run the command without asking for confirmation} {--fresh : Drop all libstream tables and re-run migrations} {--database= : The database connection to use}';
+    public $signature = 'libstream:migrate 
+        {--force : Run the command without asking for confirmation} 
+        {--fresh : Drop all libstream tables and re-run migrations} 
+        {--database= : The database connection to use} 
+        {--reset : Rollback all libstream migrations} 
+        {--log-only : Log the migration in the database without running it} 
+        {--wipe : Drop all libstream tables and delete all migrations}
+        {--path= : The path to the migrations files to be executed}
+        {--realpath : Indicate any provided migration file paths are pre-resolved absolute paths}
+        {--tables=* : A list of tables to drop before running the migrations}
+        {--drop-only : Drop the tables without running the migrations}
+        {--delete-only : Delete the migrations without running them}';
 
     public $description = 'Run the libstream migrations';
 
+    protected MigrationRepositoryInterface $repository;
+
     public function handle(): int
     {
-        if($this->option('database')) {
-            app(DatabaseManager::class)->usingConnection($this->option('database'), fn() => $this->body());
-            
+        $this->repository = app('migration.repository');
+
+        if ($this->option('database')) {
+            app(DatabaseManager::class)->usingConnection($this->option('database'), fn () => $this->body());
+
             return self::SUCCESS;
         }
 
@@ -25,28 +41,104 @@ class LibstreamMigrateCommand extends Command
         return self::SUCCESS;
     }
 
-    protected function migrationTables() : array
+    protected function tables(): array
     {
-        return config('libstream.migration_tables', []);
+        return $this->option('tables') ?: config('libstream.migration_tables', []);
+    }
+
+    protected function migrationPath(): string
+    {
+        return $this->option('path') ?: realpath(__DIR__.'/../../database/migrations');
+    }
+
+    protected function dropTables(): void
+    {
+        foreach ($this->tables() as $table) {
+            $this->info("Dropping table: $table");
+            Schema::disableForeignKeyConstraints();
+            Schema::dropIfExists($table);
+        }
+    }
+
+    protected function deleteMigrations(): void
+    {
+        foreach (glob($this->migrationPath().'/*') as $file) {
+            $migration = (object) ['migration' => pathinfo($file, PATHINFO_FILENAME)];
+            $this->info("Deleting migration: $migration->migration");
+            $this->repository->delete($migration);
+        }
+    }
+
+    protected function fresh(): void
+    {
+        $this->dropTables();
+
+        $this->deleteMigrations();
+    }
+
+    protected function logMigration(string $file): void
+    {
+        $batch = 0;
+
+        $this->info("Logging migration: $file");
+
+        $this->repository->log($file, $batch);
+    }
+
+    protected function logMigrations(): void
+    {
+        foreach (glob($this->migrationPath().'/*') as $file) {
+            $this->logMigration(pathinfo($file, PATHINFO_FILENAME));
+        }
     }
 
     protected function body()
     {
-        if ($this->option('fresh')) {
-            foreach ($this->migrationTables() as $table) {
-                $this->info("Dropping table: $table");
-                Schema::dropIfExists($table);
-            }
+        if ($this->option('delete-only')) {
+            $this->deleteMigrations();
+
+            return;
         }
 
-        $realpath = realpath(__DIR__.'/../../database/migrations/*');
+        if ($this->option('drop-only')) {
+            $this->dropTables();
 
-        $options = ['--path' => $realpath, '--realpath' => true];
+            return;
+        }
+
+        if ($this->option('log-only')) {
+            $this->logMigrations();
+
+            return;
+        }
+
+        if ($this->option('wipe')) {
+            $this->fresh();
+
+            return;
+        }
+
+        if ($this->option('fresh')) {
+            $this->fresh();
+        }
+
+        $path = $this->migrationPath();
+
+        $options = ['--path' => $path];
+
+        if (! $this->option('path')) {
+            $options['--realpath'] = true;
+        }
+
+        if ($this->option('path') && $this->option('realpath')) {
+            $options['--realpath'] = true;
+        }
+
         if ($this->option('force')) {
             $options['--force'] = true;
         }
-        if ($this->option('fresh')) {
-            $this->call('migrate:refresh', $options, $this->output);
+        if ($this->option('reset')) {
+            $this->call('migrate:reset', $options, $this->output);
         }
 
         $this->call('migrate', $options, $this->output);
