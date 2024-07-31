@@ -1,8 +1,8 @@
 # envor/libstream
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/envor/libstream.svg?style=flat-square)](https://packagist.org/packages/envor/libstream)
-[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/envor/libstream/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/envor/libstream/actions?query=workflow%3Arun-tests+branch%3Amain)
-[![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/envor/libstream/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/envor/libstream/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
+[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/envor/envor-libstream/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/envor/envor-libstream/actions?query=workflow%3Arun-tests+branch%3Amain)
+[![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/envor/envor-libstream/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/envor/envor-libstream/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/envor/libstream.svg?style=flat-square)](https://packagist.org/packages/envor/libstream)
 
 ## Installation
@@ -67,7 +67,18 @@ class Dispatcher extends LibDispatcher
     }
 }
 ```
-
+```php
+    $uuid = (string) str()->ulid();
+    $dispatcher = Dispatcher::new()->createBusiness(
+      uuid: $uuid,
+      businessAttributes: $validatedData,
+      metaData: [
+        'auth' => [
+          'email' => Auth::user()->email,
+        ],
+      ]
+    )->dispatch();
+```
 ## Testing
 
 ```bash

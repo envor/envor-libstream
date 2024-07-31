@@ -2,6 +2,6 @@
 
 use Illuminate\Support\Facades\Schema;
 
-it('can test', function () {
+it('can migrate', function () {
     expect(Schema::hasTable('stored_events'))->toBeTrue();
 });
