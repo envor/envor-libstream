@@ -44,11 +44,11 @@ class LibstreamMigrateCommand extends Command
     protected function tables(): array
     {
         $defaultTables = array_merge(
-            config('libstream.migration_tables', []), 
+            config('libstream.migration_tables', []),
             [
-                config('verbs.tables.events', 'verbs_events'), 
-                config('verbs.tables.snapshots', 'verbs_snapshots'), 
-                config('verbs.tables.state_events', 'verbs_state_events')
+                config('verbs.tables.events', 'verbs_events'),
+                config('verbs.tables.snapshots', 'verbs_snapshots'),
+                config('verbs.tables.state_events', 'verbs_state_events'),
             ]);
 
         return $this->option('tables') ?: config('libstream.migration_tables', []);
