@@ -2,6 +2,14 @@
 
 All notable changes to `libstream` will be documented in this file.
 
+## v1.0.5 - 2024-07-31
+
+### What's Changed
+
+* Use static instead of self by @inmanturbo in https://github.com/envor/envor-libstream/pull/5
+
+**Full Changelog**: https://github.com/envor/envor-libstream/compare/v1.0.4...v1.0.5
+
 ## v1.0.4 - 2024-07-31
 
 ### What's Changed
