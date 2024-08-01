@@ -2,6 +2,14 @@
 
 All notable changes to `libstream` will be documented in this file.
 
+## v1.0.6 - 2024-08-01
+
+### What's Changed
+
+* Added verbs by @inmanturbo in https://github.com/envor/envor-libstream/pull/6
+
+**Full Changelog**: https://github.com/envor/envor-libstream/compare/v1.0.5...v1.0.6
+
 ## v1.0.5 - 2024-07-31
 
 ### What's Changed
