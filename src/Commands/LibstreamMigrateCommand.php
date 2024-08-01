@@ -51,7 +51,7 @@ class LibstreamMigrateCommand extends Command
                 config('verbs.tables.state_events', 'verbs_state_events')
             ]);
 
-        return $this->option('tables') ?: config('libstream.migration_tables', []);
+        return $this->option('tables') ?: $defaultTables;
     }
 
     protected function migrationPath(): string
