@@ -19,6 +19,9 @@ class LibstreamServiceProvider extends PackageServiceProvider
             ->hasConfigFile()
             ->hasCommand(Commands\LibstreamMigrateCommand::class)
             ->hasMigrations([
+                '2024_04_16_115559_create_verb_events_table',
+                '2024_04_16_115559_create_verb_snapshots_table',
+                '2024_04_16_115559_create_verb_state_events_table',
                 '2024_06_26_194318_create_stored_events_table',
                 '2024_06_26_194319_create_snapshots_table',
                 '2024_06_27_165025_change_stored_events_aggregate_uuid_column',
@@ -26,5 +29,10 @@ class LibstreamServiceProvider extends PackageServiceProvider
                 '2024_07_07_131035_create_deleted_models_table',
             ])
             ->runsMigrations();
+    }
+
+    public function packageRegistered()
+    {
+        config(['verbs.id_type' => 'ulid']);
     }
 }
