@@ -2,6 +2,14 @@
 
 All notable changes to `libstream` will be documented in this file.
 
+## v1.0.7 - 2024-08-01
+
+### What's Changed
+
+* main by @inmanturbo in https://github.com/envor/envor-libstream/pull/7
+
+**Full Changelog**: https://github.com/envor/envor-libstream/compare/v1.0.6...v1.0.7
+
 ## v1.0.6 - 2024-08-01
 
 ### What's Changed
