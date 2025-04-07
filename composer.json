@@ -17,7 +17,7 @@
     ],
     "require": {
         "php": "^8.2",
-        "hirethunk/verbs": "^0.6.0",
+        "hirethunk/verbs": "^0.7.0",
         "illuminate/contracts": "^10.0||^11.0",
         "spatie/laravel-deleted-models": "^1.0",
         "spatie/laravel-event-sourcing": "^7.7",
